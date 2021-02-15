@@ -1,9 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CardsAppContext } from "../context/context";
 import styled from "styled-components";
+import Button from "./Button";
 
 const Player = () => {
-  const { deck, cards, getCards } = useContext(CardsAppContext);
+  const { deck, userCards, getUserCards, createRecord } = useContext(
+    CardsAppContext
+  );
   const [userPoinst, setUserPoints] = useState("");
   const [currentValue, setCurrentValue] = useState([]);
 
@@ -13,20 +16,19 @@ const Player = () => {
 
   return (
     <PlayerWrapper>
-      <button onClick={getCards}>get</button>
+      <Button func={getUserCards} children={"Get player card"} />
+      <button onClick={createRecord}>asd</button>
       <div>
-        {cards.map((card) => {
-          {
-            return card.card.cards.map((singleCard) => {
-              return (
-                <div key={singleCard.code}>
-                  <p>{singleCard.value}</p>
-                  {/* {calculateUserPoints(singleCard.value)} */}
-                  <img src={singleCard.image} alt="card" />
-                </div>
-              );
-            });
-          }
+        {userCards.map((card) => {
+          return card.card.cards.map((singleCard) => {
+            return (
+              <div key={singleCard.code}>
+                <p>{singleCard.value}</p>
+                {/* {calculateUserPoints(singleCard.value)} */}
+                <img src={singleCard.image} alt="card" />
+              </div>
+            );
+          });
         })}
       </div>
     </PlayerWrapper>
