@@ -10,7 +10,7 @@ const Button = ({ clickHandler, children }) => {
 };
 
 const MainButton = styled.button`
-  width: 171px;
+  width: 170px;
   height: 65px;
   background: var(--clr-primary-1);
   box-shadow: var(--light-shadow);
