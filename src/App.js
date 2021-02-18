@@ -1,11 +1,16 @@
-import Player from "./components/Player";
-import Dealer from "./components/Dealer";
+import React, { useContext } from "react";
+import { CardsAppContext } from "./context/context";
+import StartScreen from "./components/StartScreen";
+import Game from "./components/Game";
+import GlobalStyle from "./style/globalStyles";
 
 function App() {
+  const { gameStatus } = useContext(CardsAppContext);
+
   return (
     <div className="App">
-      <Dealer />
-      <Player />
+      <GlobalStyle />
+      {gameStatus ? <Game /> : <StartScreen />}
     </div>
   );
 }

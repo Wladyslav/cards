@@ -1,45 +1,39 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { CardsAppContext } from "../context/context";
 import styled from "styled-components";
-import Button from "./Button";
 
 const Player = () => {
-  const { deck, userCards, getUserCards, createRecord } = useContext(
-    CardsAppContext
-  );
-  const [userPoinst, setUserPoints] = useState("");
-  const [currentValue, setCurrentValue] = useState([]);
-
-  // const calculateUserPoints = (points) => {
-  //   console.log(points);
-  // };
+  const { userCards } = useContext(CardsAppContext);
 
   return (
     <PlayerWrapper>
-      <Button func={getUserCards} children={"Get player card"} />
-      <button onClick={createRecord}>asd</button>
-      <div>
-        {userCards.map((card) => {
-          return card.card.cards.map((singleCard) => {
-            return (
-              <div key={singleCard.code}>
-                <p>{singleCard.value}</p>
-                {/* {calculateUserPoints(singleCard.value)} */}
-                <img src={singleCard.image} alt="card" />
-              </div>
-            );
-          });
-        })}
-      </div>
+      <PlayerCards userCards={userCards} />
     </PlayerWrapper>
   );
 };
 
+const PlayerCards = ({ userCards }) => (
+  <>
+    {userCards.map((card) => {
+      const {
+        card: { cards: playerCards },
+      } = card;
+      return playerCards.map((singleCard) => {
+        const { code, image } = singleCard;
+        return (
+          <div key={code}>
+            <img src={image} alt="card" />
+          </div>
+        );
+      });
+    })}
+  </>
+);
+
 const PlayerWrapper = styled.section`
-  width: 100%;
-  div {
-    display: flex;
-  }
+  grid-column: 1/3;
+  grid-row: 2/3;
+  display: flex;
 `;
 
 export default Player;

@@ -1,43 +1,39 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { CardsAppContext } from "../context/context";
 import styled from "styled-components";
-import Button from "./Button";
 
 const Dealer = () => {
-  const { deck, dealerCards, getDealerCards } = useContext(CardsAppContext);
-  const [userPoinst, setUserPoints] = useState("");
-  const [currentValue, setCurrentValue] = useState([]);
-
-  // const calculateUserPoints = (points) => {
-  //   console.log(points);
-  // };
+  const { dealerCards } = useContext(CardsAppContext);
 
   return (
     <DealerWrapper>
-      <Button func={getDealerCards} children={"dealer"} />
-      <div>
-        {dealerCards.map((card) => {
-          return card.card.cards.map((singleCard) => {
-            return (
-              <div key={singleCard.code}>
-                <p>{singleCard.value}</p>
-                {/* {calculateUserPoints(singleCard.value)} */}
-                <img src={singleCard.image} alt="card" />
-              </div>
-            );
-          });
-        })}
-      </div>
+      <DealerCards dealerCards={dealerCards} />
     </DealerWrapper>
   );
 };
 
+const DealerCards = ({ dealerCards }) => (
+  <>
+    {dealerCards.map((card) => {
+      const {
+        card: { cards: dealerCards },
+      } = card;
+      return dealerCards.map((singleCard) => {
+        const { code, image } = singleCard;
+        return (
+          <div key={code}>
+            <img src={image} alt="card" />
+          </div>
+        );
+      });
+    })}
+  </>
+);
+
 const DealerWrapper = styled.section`
-  height: 50vh;
-  border: 2px black solid;
-  div {
-    display: flex;
-  }
+  grid-column: 1/3;
+  grid-row: 1/2;
+  display: flex;
 `;
 
 export default Dealer;
